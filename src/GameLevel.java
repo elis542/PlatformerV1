@@ -17,7 +17,7 @@ public class GameLevel extends Canvas {
 		player = new Player(getWidth()/2, getHeight()/2, this, width/70, height/25, "/sprites/ninjasprites/Idle__000.png");
 		
 		entityList.add(new Object(width/2, height-height/10, this, width, height/10, null));
-		entityList.add(new BasicEnemy(20, 20, this, 60, 60, null));
+		entityList.add(new BirdEnemy(20, 20, this, 40, 40d, null));
 		entityList.add(player);
 		model = new GameControllModel(player);
 		

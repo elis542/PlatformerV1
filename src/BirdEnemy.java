@@ -1,19 +1,42 @@
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
-public class BasicEnemy extends Enemy {
+public class BirdEnemy extends Enemy {
 	private int timer = 0;
+	private int xOffset = 0;
+	private Image runImage;
+	private int runImageWidth = 32;
 
-	public BasicEnemy(double xPos, double yPos, GameLevel level, double width, double height, String sprite) {
-		super(xPos, yPos, level, width, height, sprite);
+	public BirdEnemy(double xPos, double yPos, GameLevel level, double width, double height, String sprite) {
+		super(xPos, yPos, level, width, height, sprite); //This does not use the classic sprite
 		setVelocity(1);
+		
+		runImage = new Image("sprites/Walk.png");
+		 runAnimation.setCycleCount(Timeline.INDEFINITE);
+		runAnimation.play();
 	}
+	
 
 	@Override
 	public void drawYourself(GraphicsContext gc) {
-		gc.setFill(Color.FIREBRICK);
-		gc.fillRect(getXPos() - getEntityWidth()/2, getYPos() - getEntityHeight()/2, getEntityWidth(), getEntityHeight());
+		gc.drawImage(runImage, xOffset, 0, runImageWidth, 32, getXPos(), getYPos(), getEntityWidth(), getEntityWidth());
+		//gc.drawImage(runImage, getXPos(), getYPos());
 	}
+	
+	Timeline runAnimation = new Timeline(
+			new KeyFrame(Duration.millis(75), e -> {
+				xOffset += runImageWidth;
+
+				if (xOffset >= runImageWidth * 6) {
+					xOffset = 0;
+				}
+			}));
 
 	@Override
 	public void logicUpdate() {
@@ -40,7 +63,6 @@ public class BasicEnemy extends Enemy {
 			fire();
 			timer = 0;
 		}
-		
 	}
 	
 	public void fire() {
