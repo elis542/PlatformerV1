@@ -12,11 +12,21 @@ public class Player extends GameEntity {
 	private int timer = 0;
 	private int jumpTimer = 0;
 	private boolean jumpAllowed = true;
+	private PlayerInventory inventory;
+	private boolean itemSelected = false;
 
 	public Player(double xPos, double yPos, GameLevel level, double width, double height, String sprite) {
 		super(xPos, yPos, level, width, height, sprite);
 		setVelocity(2);
 		isPlayer();
+		inventory = new PlayerInventory(xPos, yPos, this);
+		inventory.add(new Cover(0, 0, level, 150, 150, "sprites/iconplaceholder.png", "sprites/iconplaceholder.png"));
+		inventory.add(new Cover(0, 0, level, 150, 150, "sprites/iconplaceholder.png", "sprites/iconplaceholder.png"));
+		inventory.add(new Cover(0, 0, level, 150, 150, "sprites/iconplaceholder.png", "sprites/iconplaceholder.png"));
+		inventory.add(new Cover(0, 0, level, 150, 150, "sprites/iconplaceholder.png", "sprites/iconplaceholder.png"));
+		inventory.add(new Cover(0, 0, level, 150, 150, "sprites/iconplaceholder.png", "sprites/iconplaceholder.png"));
+		inventory.add(new Cover(0, 0, level, 150, 150, "sprites/iconplaceholder.png", "sprites/iconplaceholder.png"));
+		inventory.add(new Cover(0, 0, level, 150, 150, "sprites/iconplaceholder.png", "sprites/iconplaceholder.png"));
 		
 		List<String> runAnimation = new ArrayList<>();
 		runAnimation.add("/sprites/ninjasprites/Run__000.png");
@@ -31,7 +41,7 @@ public class Player extends GameEntity {
 		runAnimation.add("/sprites/ninjasprites/Run__009.png");
 		setRunAnimation(runAnimation);
 		
-		jump.setCycleCount(30);
+		jump.setCycleCount(35);
 		runAnimationPlay.setCycleCount(Timeline.INDEFINITE);
 	}
 
@@ -46,13 +56,15 @@ public class Player extends GameEntity {
 			adjustedX = (getXPos()-(getEntityWidth()/2));
 		}
 		gc.drawImage(getEntitySprite(), adjustedX, (getYPos() - getEntityHeight()/2)+Main.getHeight()/800);
-		gc.strokeRect(adjustedX, (getYPos() - getEntityHeight()/2), getEntityWidth(), getEntityHeight()); //Detta är endast för att se hitboxen av spelaren
+		//gc.strokeRect(adjustedX, (getYPos() - getEntityHeight()/2), getEntityWidth(), getEntityHeight()); //Detta är endast för att se hitboxen av spelaren
 		gc.restore(); 
+		
+		inventory.drawYourself(gc);
 	}
 
 	@Override
 	public void logicUpdate() {
-		if (!(collisionY(+getVelocity(), true) && collisionX(0, true) && !(jump.getStatus() == Animation.Status.RUNNING))) {
+		if (!(collisionXandY(0, +getVelocity(), true) && !(jump.getStatus() == Animation.Status.RUNNING))) {
 			if (getLevelHeight() <= (getYPos() + getVelocity())) { 
 				setYPos(getLevelHeight() - getEntityHeight() - 3); 
 			} else {
@@ -75,12 +87,14 @@ public class Player extends GameEntity {
 	}
 	
 	Timeline jump = new Timeline(
-			new KeyFrame(Duration.millis(5), e -> {
+			new KeyFrame(Duration.millis(7), e -> {
 				timer++;
-				removeYPos(7);
+				if (!collisionXandY(0, -(12-(timer/4)), true)) {
+					removeYPos(12-(timer/4));
 				}
-			));
-	
+			}
+					));
+
 	Timeline runAnimationPlay = new Timeline(
 			new KeyFrame(Duration.millis(50), e -> {
 				if (x > getRunAnimation().size() - 1) {
@@ -93,8 +107,8 @@ public class Player extends GameEntity {
 	public void moveCommand(String direction) {
 		
 		switch (direction) {
-		case "UP" : 
-			if (collisionY(-getVelocity(), true) && collisionX(0, true)) {
+		case "UP" : //Används ej atm
+			if (collisionXandY(0, -getVelocity(), true)) {
 				return;
 			}
 			if (0 >= (getYPos() - getVelocity())) {
@@ -104,9 +118,9 @@ public class Player extends GameEntity {
 			removeYPos(getVelocity());
 			break;
 
-		case "DOWN" : 
+		case "DOWN" : //Används ej atm
 			
-			if (collisionY(+getVelocity(), true) && collisionX(0, true)) {
+			if (collisionXandY(0, +getVelocity(), true)) {
 				return;
 			}
 			if (getLevelHeight() <= (getYPos() + getVelocity())) { 
@@ -118,7 +132,7 @@ public class Player extends GameEntity {
 
 		case "RIGHT" : 
 			setInvertSprite(false);
-			if (collisionX(+getVelocity(), true) && collisionY(0, true)) {
+			if (collisionXandY(+getVelocity(), 0, true)) {
 				return;
 			}	
 			if(getLevelWidth() <= (getXPos() + getVelocity() + 30)) {
@@ -130,7 +144,7 @@ public class Player extends GameEntity {
 
 		case "LEFT" : 
 			setInvertSprite(true);
-			if (collisionX(-getVelocity(), true) && collisionY(0, true)) {
+			if (collisionXandY(-getVelocity(), 0, true)) {
 				return;
 			}
 			if (0 >= (getXPos() - getVelocity())) {
@@ -141,7 +155,7 @@ public class Player extends GameEntity {
 			break;
 			
 		case "SPACE" : 
-			if (jumpAllowed && (collisionY(+getVelocity(), true) && collisionX(0, true))) {
+			if (jumpAllowed && (collisionXandY(0, +getVelocity(), true))) {
 				timer = 0;
 				jumpAllowed = false;
 				jump.play();
@@ -149,9 +163,47 @@ public class Player extends GameEntity {
 		}	
 		runAnimationPlay.play();
 	}
+	
+	public void openInventory() {
+		inventory.open();
+	}
 
+	public void closeInventory() {
+		inventory.close();
+	}
+	
+	public boolean getCurrentPlaceable() {
+		return itemSelected;
+	}
+	
+	public void placePlaceable(double xPos, double yPos) {
+		for (int i = 0; i < inventory.getPlaceables().size(); i++) {
+			if (inventory.getPlaceables().get(i).getSelect()) {
+				inventory.getPlaceables().get(i).setXPos(xPos);
+				inventory.getPlaceables().get(i).setYPos(yPos);
+				if (!inventory.getPlaceables().get(i).collisionXandY(0, 0, false)) {
+					getLevel().addEntity(inventory.getPlaceables().get(i));
+					itemSelected = false;
+					inventory.remove(i);
+				} 
+			}
+		}
+	}
+	
+	public void grab(double xPos, double yPos) {
+		for (Placeable a : inventory.getPlaceables()) {
+			if (a.getCurrentPos()[0] + a.getIconSize() > xPos && xPos > a.getCurrentPos()[0] && inventory.getOpen()) {
+				if (a.getCurrentPos()[1] + a.getIconSize() > yPos && yPos > a.getCurrentPos()[1]) {
+					a.select();
+					itemSelected = true;
+					break;
+				}
+			}
+		}
+	}
 
 	public void fire(double xClick, double yClick) {
 		getLevel().bulletFired(new Bullet(getXPos(), getYPos(), getLevel(), xClick, yClick, true, false, 5, "sprite"));
+		inventory.deselectAll();
 	}
 }

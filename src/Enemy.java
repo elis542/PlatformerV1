@@ -10,6 +10,7 @@ public abstract class Enemy extends GameEntity {
 	public Enemy(double xPos, double yPos, GameLevel level, double width, double height, String sprite) {
 		super(xPos, yPos, level, width, height, sprite);
 		setVelocity(10);
+		isEnemy();
 	}
 
 
@@ -22,6 +23,10 @@ public abstract class Enemy extends GameEntity {
 				hit(1);
 			}
 		}
+	}
+	
+	public double[] getTarget() {
+		return target;
 	}
 
 	public void setTarget(double[] target) {

@@ -16,17 +16,25 @@ public class BirdEnemy extends Enemy {
 	public BirdEnemy(double xPos, double yPos, GameLevel level, double width, double height, String sprite) {
 		super(xPos, yPos, level, width, height, sprite); //This does not use the classic sprite
 		setVelocity(1);
-		
 		runImage = new Image("sprites/Walk.png");
-		 runAnimation.setCycleCount(Timeline.INDEFINITE);
+		runAnimation.setCycleCount(Timeline.INDEFINITE);
 		runAnimation.play();
 	}
-	
+
 
 	@Override
 	public void drawYourself(GraphicsContext gc) {
-		gc.drawImage(runImage, xOffset, 0, runImageWidth, 32, getXPos(), getYPos(), getEntityWidth(), getEntityWidth());
-		//gc.drawImage(runImage, getXPos(), getYPos());
+		double adjustedX;
+			gc.save();
+			if (getInvertSprite()) {
+				gc.scale(-1, 1);
+				adjustedX = -(getXPos()+(getEntityWidth()/2));
+			} else {
+				adjustedX = (getXPos()-(getEntityWidth()/2));
+			}
+			gc.drawImage(runImage, xOffset, 0, runImageWidth, 32, adjustedX, getYPos() - getEntityHeight()/2, getEntityWidth(), getEntityWidth());
+			//gc.strokeRect(adjustedX, (getYPos() - getEntityHeight()/2), getEntityWidth(), getEntityHeight()); //Detta är endast för att se hitboxen av spelaren
+			gc.restore(); 
 	}
 	
 	Timeline runAnimation = new Timeline(
@@ -42,13 +50,13 @@ public class BirdEnemy extends Enemy {
 	public void logicUpdate() {
 		
 		//Moving the enemy
-		if(collisionX(+getVelocity(), true) && collisionY(0, true)) {
+		if(collisionXandY(+getVelocity(), 0, true)) {
 			removeXPos(1);
-		} else if(collisionX(-getVelocity(), true) && collisionY(0, true)) {
+		} else if(collisionXandY(-getVelocity(), 0, true)) {
 			addXPos(1);
-		} else if(collisionX(0, true) && collisionY(+getVelocity(), true)) {
+		} else if(collisionXandY(0, +getVelocity(), true)) {
 			removeYPos(1);
-		} else	if(collisionX(0, true) && collisionY(-getVelocity(), true)) {
+		} else	if(collisionXandY(0, -getVelocity(), true)) {
 			addYPos(1);
 		}	
 		
@@ -57,11 +65,16 @@ public class BirdEnemy extends Enemy {
 		addXPos(getVelocityXandY()[0]);
 		addYPos(getVelocityXandY()[1]);
 		
-		
 		timer++;
 		if (timer >= 300) {
 			fire();
 			timer = 0;
+		}
+		
+		if (getTarget()[0] > getXPos()) {
+			setInvertSprite(false);
+		} else if (getTarget()[0] < getXPos()) {
+			setInvertSprite(true);
 		}
 	}
 	

@@ -72,7 +72,7 @@ public class Bullet extends GameEntity {
 
 	@Override
 	public void collidingWith(GameEntity collider) {
-		if (collisionX(0, true) && collisionY(0, true)) {
+		if (collisionXandY(velocityX, velocityY, true)) {
 			hit(100);
 		}	
 

@@ -8,7 +8,7 @@ public class Object extends GameEntity {
 		setHard(true);
 	}
 
-	
+	@Override
 	public void collidingWith(GameEntity collider) { 
 		
 	}

@@ -18,7 +18,7 @@ public abstract class GameEntity {
 	private Image entitySprite;
 	private List<String> runAnimation = new ArrayList<>();
 	private String originalSprite;
-	private boolean isEnemy = true;
+	private boolean isEnemy = false;
 	private boolean isPlayer = false;
 	private boolean invertSprite = false;
 	
@@ -30,7 +30,10 @@ public abstract class GameEntity {
 	
 	public void isPlayer() {
 		isPlayer = true;
-		isEnemy = false;
+	}
+	
+	public void isEnemy() {
+		isEnemy = true;
 	}
 	
 	public boolean getInvertSprite() {
@@ -102,34 +105,44 @@ public abstract class GameEntity {
 	public boolean getAlive() {
 		return alive;
 	}
-	
-	public boolean collisionY(double direction, boolean hasToBeHard) {	
+
+	public boolean collisionXandY(double directionX, double directionY, boolean hasToBeHard) {	
 		for (GameEntity a : getLevel().getEntityList()) {
-			if (a.getHard() == hasToBeHard && a.getYPos() - (getYPos()-getEntityHeight()/2 + direction) <= (a.getEntityHeight()/2) && ((getYPos()-getEntityHeight()/2) + direction) - a.getYPos() <= (a.getEntityHeight()/2)) {
-				return true;
-			}else if (a.getHard() == hasToBeHard && a.getYPos() - (getYPos()+getEntityHeight()/2 + direction) <= (a.getEntityHeight()/2) && ((getYPos()+getEntityHeight()/2) + direction) - a.getYPos() <= (a.getEntityHeight()/2)) {
+			if ((hasToBeHard == true && !a.getHard()) || a == this) {
+				continue;
+			}
+			double deltaX = Math.abs(a.getXPos() - (getXPos() + directionX));
+			double deltaY = Math.abs(a.getYPos() - (getYPos() + directionY));
+
+			boolean collisionX = deltaX < (a.getEntityWidth() / 2 + getEntityWidth() / 2);
+			boolean collisionY = deltaY < (a.getEntityHeight() / 2 + getEntityHeight() / 2);
+			if (collisionX && collisionY) {
 				return true;
 			}
-			
+		} 
+		return false;
+	}
+
+	public boolean landingOn(double directionY) {	
+		double bottomSide = (getYPos() + getEntityHeight()/2) + getEntityHeight()/2 + directionY;
+		for (GameEntity a : getLevel().getEntityList()) {
+			if (!(a.isPlayer || a.isEnemy)) {
+				continue;
+			}
+			double deltaX = Math.abs(a.getXPos() - (getXPos()));
+			boolean collisionX = deltaX < (a.getEntityWidth() / 2 + getEntityWidth() / 2);
+			if (collisionX && bottomSide == a.getYPos()) {
+				hit(1000);
+			}
 		}
 		return false;
 	}
-	
-	public boolean collisionX(double direction, boolean hasToBeHard) {
-		for (GameEntity a : getLevel().getEntityList()) {
-			if (a.getHard() == hasToBeHard && a.getXPos() - (getXPos()-getEntityWidth()/2 + direction) <= (a.getEntityWidth()/2) && ((getXPos()-getEntityWidth()/2) + direction) - a.getXPos() <= (a.getEntityWidth()/2)) {
-				return true;
-			} else if (a.getHard() == hasToBeHard && a.getXPos() - (getXPos()+getEntityWidth()/2 + direction) <= (a.getEntityWidth()/2) && (getXPos()+getEntityWidth()/2 + direction) - a.getXPos() <= a.getEntityWidth()/2) {
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
+
+
 	public void hit(int damage) {
-		health -= 1;
+		health -= damage;
 		if (health <= 0) {
+			System.out.println("dead");
 			alive = false;
 		}
 	}
@@ -189,5 +202,4 @@ public abstract class GameEntity {
 	public abstract void drawYourself(GraphicsContext gc);
 	
 	public abstract void logicUpdate();
-	
 }
