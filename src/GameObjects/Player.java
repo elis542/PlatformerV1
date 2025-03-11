@@ -25,10 +25,27 @@ public class Player extends GameEntity {
 
 	public Player(double xPos, double yPos, GameLevel level, double width, double height, String sprite) {
 		super(xPos, yPos, level, width, height, sprite);
+		
 		setVelocity(Main.getWidthAndHeight()[1] / 400);
 		isPlayer();
+		
 		inventory = new PlayerInventory(xPos, yPos, this);
-		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/iconplaceholder.png", "/sprites/placeables/Pad_02_1.png"));
+		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder.png", "/sprites/placeables/grass_pad.png"));
+		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder2.png", "/sprites/placeables/stone_pad.png"));
+		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder.png", "/sprites/placeables/grass_pad.png"));
+		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder2.png", "/sprites/placeables/stone_pad.png"));
+		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder.png", "/sprites/placeables/grass_pad.png"));
+		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder2.png", "/sprites/placeables/stone_pad.png"));
+		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder.png", "/sprites/placeables/grass_pad.png"));
+		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder2.png", "/sprites/placeables/stone_pad.png"));
+		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder.png", "/sprites/placeables/grass_pad.png"));
+		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder2.png", "/sprites/placeables/stone_pad.png"));
+		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder.png", "/sprites/placeables/grass_pad.png"));
+		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder2.png", "/sprites/placeables/stone_pad.png"));
+		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder.png", "/sprites/placeables/grass_pad.png"));
+		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder2.png", "/sprites/placeables/stone_pad.png"));
+		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder.png", "/sprites/placeables/grass_pad.png"));
+		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder2.png", "/sprites/placeables/stone_pad.png"));
 
 		setRunAnimation(createRunAnimationList());
 		setJumpAnimation(createJumpAnimationList());

@@ -1,4 +1,5 @@
 package LogicPackage;
+import Scenes.MainMenuScene;
 import Scenes.SceneCreatorGameLevel;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -13,7 +14,7 @@ public class Main extends Application {
 	private static double screenMultiplier = 100;
 	private static double width = (16 * screenMultiplier);
 	private static double height = (9 * screenMultiplier);
-	private static double scaleAmount = 1.4;
+	private static double scaleAmount = 1;
 
 	@Override
 	public void start(Stage arg0) throws Exception {
@@ -23,11 +24,9 @@ public class Main extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.setTitle("My Game :)");
 		
-		SceneCreatorGameLevel gameHBox = new SceneCreatorGameLevel();
 		
-		primaryStage.setScene(new Scene(gameHBox));
-		GameLoop gameLoop = new GameLoop(gameHBox.getLevel());
-		gameLoop.startGame();
+		Scene newScene = new Scene(new MainMenuScene(width, height, primaryStage));
+		primaryStage.setScene(newScene);
 		
 		primaryStage.show();
 	}

@@ -24,11 +24,9 @@ public class GameControllModel {
 		}
 		if (event.getButton() == MouseButton.SECONDARY) {
 			if (!player.getCurrentPlaceable()) {
-				System.out.println("grab");
 				player.grab(event.getX(), event.getY());
 			} else {
 				player.placePlaceable(event.getX(), event.getY());
-				System.out.println("place");
 			}
 		}
 	}

@@ -1,4 +1,5 @@
 package Scenes;
+import LogicPackage.GameLoop;
 import LogicPackage.Main;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
@@ -13,6 +14,8 @@ public class SceneCreatorGameLevel extends HBox {
 		getChildren().add(currentLevel);
 		setHgrow(currentLevel, Priority.NEVER);
 		setAlignment(Pos.CENTER);
+		GameLoop gameLoop = new GameLoop(currentLevel);
+		gameLoop.startGame();
 	}
 	
 	public GameLevel getLevel() {
