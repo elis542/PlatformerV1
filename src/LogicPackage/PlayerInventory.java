@@ -11,8 +11,8 @@ public class PlayerInventory {
 	private boolean inventoryOpen;
 	private Player player;
 	private List<Placeable> inventoryItems = new ArrayList<>();
-	private final double inventoryHeight = 200;
-	private final double inventoryWidth = 325;
+	private final double inventoryHeight = 170;
+	private final double inventoryWidth = 335;
 	private double[] inventoryLocation = new double[2];
 	private double[] firstIconPos = new double [2];
 	
@@ -28,13 +28,13 @@ public class PlayerInventory {
 		if (inventoryOpen) {
 			gc.setFill(Color.rgb(100, 24, 13, 0.5));
 			gc.fillRect(inventoryLocation[0], inventoryLocation[1], inventoryWidth, inventoryHeight);
-			double xOffset = 0;
-			double yOffset = 0;
+			double xOffset = 4;
+			double yOffset = 2;
 			for (Placeable a : inventoryItems) {
 				a.drawYourselfInventory(gc, firstIconPos[0] + xOffset, firstIconPos[1] + yOffset);
 				xOffset += 55;
 				if (xOffset >= 330) {
-					xOffset = 0;
+					xOffset = 4;
 					yOffset += 55;
 				}
 			}

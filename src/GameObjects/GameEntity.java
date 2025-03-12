@@ -117,6 +117,25 @@ public abstract class GameEntity {
 		return alive;
 	}
 
+	public GameEntity standingOn(double directionY) {
+		for (GameEntity a : getLevel().getEntityList()) {
+			if(a instanceof Cover && ((Cover) a).getFalling()) {
+				continue;
+			}
+			if (a.getHard() == true && !a.equals(this)) {
+				double deltaX = Math.abs(a.getXPos() - (getXPos()));
+				double deltaY = Math.abs(a.getYPos() - (getYPos() + directionY));
+
+				boolean collisionX = deltaX < (a.getEntityWidth() / 2 + getEntityWidth() / 2);
+				boolean collisionY = deltaY < (a.getEntityHeight() / 2 + getEntityHeight() / 2);
+				if (collisionX && collisionY) {
+					return a;
+				}
+			}
+		}	
+		return null;
+	}
+
 	public boolean collisionXandY(double directionX, double directionY, boolean hasToBeHard) {	
 		for (GameEntity a : getLevel().getEntityList()) {
 			if ((hasToBeHard == true && !a.getHard()) || a == this) {

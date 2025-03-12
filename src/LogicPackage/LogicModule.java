@@ -22,7 +22,6 @@ public class LogicModule {
 	
 	public void checkCollisions() {
 		for (int i = 0; i < entityList.size(); i++) {
-		
 			for (int j = 0; j < entityList.size(); j++) {
 				entityList.get(i).collidingWith(entityList.get(j));
 			}

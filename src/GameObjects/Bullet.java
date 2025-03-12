@@ -17,7 +17,7 @@ public class Bullet extends GameEntity {
 	public Bullet(double xPos, double yPos, GameLevel level, double targetX, double targetY) {
 		super(xPos, yPos, level);
 		
-		setVelocity(Main.getWidthAndHeight()[1] / 1250);
+		setVelocity(1);
 		
 		trajectoryCalculation(targetX, targetY);
 	}

@@ -9,7 +9,7 @@ public abstract class Placeable extends GameEntity {
 	private double[] currentPos = new double[2];
 	private static final double iconSize = 50;
 	private boolean selected;
-
+	
 	public Placeable(double xPos, double yPos, GameLevel level, double width, double height, String icon, String placeSprite) {
 		super(xPos, yPos, level, width, height, placeSprite);
 		this.icon = new Image(icon);	

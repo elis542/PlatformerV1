@@ -17,6 +17,7 @@ public class Player extends GameEntity {
 	private int x = 0;
 	private int timer = 0;
 	private int jumpTimer = 0;
+	private int jumpTimerModifier = 50;
 	private boolean jumpAllowed = true;
 	private PlayerInventory inventory;
 	private boolean itemSelected = false;
@@ -26,10 +27,12 @@ public class Player extends GameEntity {
 	public Player(double xPos, double yPos, GameLevel level, double width, double height, String sprite) {
 		super(xPos, yPos, level, width, height, sprite);
 		
-		setVelocity(Main.getWidthAndHeight()[1] / 400);
+		setVelocity(6);
 		isPlayer();
 		
 		inventory = new PlayerInventory(xPos, yPos, this);
+		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder.png", "/sprites/placeables/grass_pad.png"));
+		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder2.png", "/sprites/placeables/stone_pad.png"));
 		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder.png", "/sprites/placeables/grass_pad.png"));
 		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder2.png", "/sprites/placeables/stone_pad.png"));
 		inventory.add(new Cover(0, 0, level, Main.getWidthAndHeight()[0]/10, Main.getWidthAndHeight()[1]/20, "sprites/icons/iconplaceholder.png", "/sprites/placeables/grass_pad.png"));
@@ -90,16 +93,15 @@ public class Player extends GameEntity {
 	@Override
 	public void logicUpdate() {
 		if (!(collisionXandY(0, +getVelocity(), true) && !(jump.getStatus() == Animation.Status.RUNNING))) {
-			if (getLevelHeight() <= (getYPos() + getVelocity())) { 
-				setYPos(getLevelHeight() - getEntityHeight() - 3); 
-			} else {
-				addYPos(getVelocity());
-			}
+			addYPos(getVelocity());
+			if (standingOn(getVelocity()) != null) {
+				setYPos(standingOn(getVelocity()).getYPos() - getEntityHeight()/2 - standingOn(getVelocity()).getEntityHeight()/2);
+			} 
 		}
 
 		if (!jumpAllowed) {
 			jumpTimer++;
-			if (jumpTimer > 75) {
+			if (jumpTimer > jumpTimerModifier) {
 				jumpAllowed = true;
 				jumpTimer = 0;
 			}
@@ -124,7 +126,7 @@ public class Player extends GameEntity {
 			new KeyFrame(Duration.millis(7), e -> {
 				timer++;
 				if (!collisionXandY(0, -getVelocity()*4.5, true)) {
-					removeYPos((getVelocity()*4.5) - timer/5);
+					removeYPos((getVelocity()*2) - timer/5);
 				}
 			}
 					));
@@ -242,7 +244,7 @@ public class Player extends GameEntity {
 	}
 
 	public void fire(double xClick, double yClick) {
-		getLevel().bulletFired(new Bullet(getXPos(), getYPos(), getLevel(), xClick, yClick, true, false, 5, "sprite"));
+		getLevel().bulletFired(new Bullet(getXPos(), getYPos(), getLevel(), xClick, yClick, true, false, 17, "sprite"));
 		itemSelected = false;
 		inventory.deselectAll();
 	}

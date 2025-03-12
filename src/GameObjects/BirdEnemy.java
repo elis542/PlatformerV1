@@ -18,7 +18,7 @@ public class BirdEnemy extends Enemy {
 
 	public BirdEnemy(double xPos, double yPos, GameLevel level, double width, double height, String sprite) {
 		super(xPos, yPos, level, width, height, sprite); //This does not use the classic sprite
-		setVelocity(Main.getWidthAndHeight()[1] / 1000);
+		setVelocity(4);
 		runImage = new Image("/sprites/animals/Walk.png");
 		runAnimation.setCycleCount(Timeline.INDEFINITE);
 		runAnimation.play();

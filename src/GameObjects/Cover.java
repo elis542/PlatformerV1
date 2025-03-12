@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Cover extends Placeable {
+	private boolean falling = true;
 
 	public Cover(double xPos, double yPos, GameLevel level, double width, double height, String icon, String sprite) {
 		super(xPos, yPos, level, width, height, icon, sprite);
@@ -23,15 +24,19 @@ public class Cover extends Placeable {
 			hit(1000);
 		}
 
-		if (!(collisionXandY(0, 0, true))) {
-			if (getLevelHeight() <= (getYPos() + getVelocity())) { 
-				setYPos(getLevelHeight() - getEntityHeight() - 3); 
-			} 
-			else {
-				addYPos(getVelocity());
-			}
+		if (!(collisionXandY(0, 0, true) && standingOn(getVelocity()) == null)) {
+			addYPos(getVelocity());
+		}
+		 if (standingOn(getVelocity()) != null) {
+			setYPos(standingOn(getVelocity()).getYPos() - getEntityHeight()/2 - standingOn(getVelocity()).getEntityHeight()/2 + 2);
+			falling = false;
 		} 
+	} 
+	
+	public boolean getFalling() {
+		return falling;
 	}
+
 	
 	@Override
 	public void collidingWith(GameEntity collider) {
