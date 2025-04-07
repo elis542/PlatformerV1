@@ -16,6 +16,7 @@ public class SceneCreatorGameLevel extends StackPane {
 
 	public SceneCreatorGameLevel(int level, Stage primaryStage) {
 		currentLevel = chosenLevel(level);
+		GameLoop gameLoop = new GameLoop(currentLevel);
 
 		// Menyrad
 		HBox menuButtons = new HBox();
@@ -32,6 +33,7 @@ public class SceneCreatorGameLevel extends StackPane {
 		exitButton.setMouseTransparent(false);
 		exitButton.setOnMouseClicked(event -> {
 			if (event.isStillSincePress()) {
+				gameLoop.stopGame();
 				Scene newScene = new Scene(new MainMenuScene(getWidth(), getHeight(), primaryStage));
 				primaryStage.setScene(newScene);
 			}
@@ -46,7 +48,6 @@ public class SceneCreatorGameLevel extends StackPane {
 
 		this.getChildren().addAll(currentLevel, topLayout);
 
-		GameLoop gameLoop = new GameLoop(currentLevel);
 		gameLoop.startGame();
 	}
 

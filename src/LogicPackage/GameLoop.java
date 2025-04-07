@@ -29,6 +29,9 @@ public class GameLoop extends AnimationTimer {
  	public void startGame() {
  		start();
  		logicLoop.playFromStart();
- 		
+ 	}
+ 	
+ 	public void stopGame() {
+ 		logicLoop.stop();
  	}
 }

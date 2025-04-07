@@ -63,13 +63,16 @@ public class BirdEnemy extends Enemy {
 			addYPos(1);
 		}	
 		
-		setTarget(new double[] {getLevel().getPlayer().getXPos(), getLevel().getPlayer().getYPos()});
+		double playerX = getLevel().getPlayer().getXPos();
+		double playerY = getLevel().getPlayer().getYPos();
+		
+		setTarget(new double[] {playerX, playerY - 300});
 		
 		addXPos(getVelocityXandY()[0]);
 		addYPos(getVelocityXandY()[1]);
 		
 		timer++;
-		if (timer >= 300) {
+		if (timer >= 120) {
 			fire();
 			timer = 0;
 		}
@@ -82,6 +85,6 @@ public class BirdEnemy extends Enemy {
 	}
 	
 	public void fire() {
-		getLevel().bulletFired(new Bullet(getXPos(), getYPos(), getLevel(), getLevel().getPlayer().getXPos(), getLevel().getPlayer().getYPos(), false, true, 5, "sprite"));
+		getLevel().bulletFired(new Bullet(getXPos(), getYPos(), getLevel(), getLevel().getPlayer().getXPos(), getLevel().getPlayer().getYPos(), false, true, 12, "sprite"));
 	}
 }

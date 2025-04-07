@@ -8,6 +8,7 @@ import LogicPackage.GameControllModel;
 import LogicPackage.Main;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class GameLevel extends Canvas {
 	private GraphicsContext gc = getGraphicsContext2D();
@@ -63,8 +64,14 @@ public class GameLevel extends Canvas {
 		return gc;
 	}
 	
+	public void paintBackground() {
+		gc.setFill(Color.BISQUE);
+		gc.fillRect(0, 0, getWidth(), getHeight());
+	}
+	
 	public void reDraw() {
 		gc.clearRect(0, 0, getWidth(), getHeight());
+		paintBackground();
 		for (GameEntity entity : entityList) {
 			if (entity instanceof Player) {
 				continue;
