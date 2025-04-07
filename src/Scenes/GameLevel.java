@@ -14,23 +14,18 @@ public class GameLevel extends Canvas {
 	private List<GameEntity> entityList = new ArrayList<>();
 	private Player player;
 	private GameControllModel model;
+	private double scale = Main.getScale();
 
 	public GameLevel(double width, double height) {
-		setScaleX(Main.getScale());
-		setScaleY(Main.getScale());
+		setScaleX(scale);
+		setScaleY(scale);
 		
-		setWidth(width - height/45);
-		setHeight(height - height/20);
+		setWidth(width);
+		setHeight(height);
 		
 		player = new Player(getWidth()/2, getHeight()/2, this, width/70, height/25, "/sprites/ninjasprites/Idle__000.png");
 		
 		model = new GameControllModel(player);
-		
-		player.setModel(model);
-		
-		entityList.add(new Object(width/5, height-height/5, this, width/10, height/2.5, null));
-		entityList.add(new Object(width/2, height-height/10, this, width/1.25, height/10, null));
-		entityList.add(new BirdEnemy(20, 20, this, width/35, width/35, null));
 		entityList.add(player);
 		
 		setFocusTraversable(true);

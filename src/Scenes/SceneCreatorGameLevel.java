@@ -1,25 +1,66 @@
 package Scenes;
 import LogicPackage.GameLoop;
 import LogicPackage.Main;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class SceneCreatorGameLevel extends HBox {
+public class SceneCreatorGameLevel extends StackPane {
 	private GameLevel currentLevel;
-	
-	public SceneCreatorGameLevel() {
-		GameLevel currentLevel = new GameLevel(Main.getWidthAndHeight()[0], Main.getWidthAndHeight()[1]);
-		this.currentLevel = currentLevel;
-		getChildren().add(currentLevel);
-		setHgrow(currentLevel, Priority.NEVER);
-		setAlignment(Pos.CENTER);
+	private double scale = Main.getScale();
+
+	public SceneCreatorGameLevel(int level, Stage primaryStage) {
+		currentLevel = chosenLevel(level);
+
+		// Menyrad
+		HBox menuButtons = new HBox();
+		menuButtons.setPadding(new Insets(10 * scale, 10 * scale, 10 * scale, 10 * scale));
+		menuButtons.setMinHeight(95 * scale);
+		menuButtons.setMaxHeight(75 * scale);
+		menuButtons.setStyle("-fx-background-color: rgba(153,153,28,1);");
+		menuButtons.setAlignment(Pos.TOP_LEFT);
+		menuButtons.setPickOnBounds(true);
+		menuButtons.setMouseTransparent(false);
+
+		MyCanvasButton exitButton = new MyCanvasButton(150, 75, "sprites/buttons/backButton.png", 5);
+		exitButton.setPickOnBounds(true);
+		exitButton.setMouseTransparent(false);
+		exitButton.setOnMouseClicked(event -> {
+			if (event.isStillSincePress()) {
+				Scene newScene = new Scene(new MainMenuScene(getWidth(), getHeight(), primaryStage));
+				primaryStage.setScene(newScene);
+			}
+		});
+		
+		menuButtons.getChildren().add(exitButton);
+
+		VBox topLayout = new VBox();
+		topLayout.setAlignment(Pos.TOP_CENTER);
+		topLayout.setPickOnBounds(false);
+		topLayout.getChildren().add(menuButtons);
+
+		this.getChildren().addAll(currentLevel, topLayout);
+
 		GameLoop gameLoop = new GameLoop(currentLevel);
 		gameLoop.startGame();
 	}
+
 	
-	public GameLevel getLevel() {
-		return currentLevel;
+	public GameLevel chosenLevel(int level) {
+		GameLevel pickedLevel = null;
+		if (level == 0) {
+			pickedLevel = new GameLevel1(Main.getWidthAndHeight()[0], Main.getWidthAndHeight()[1]);
+			
+		} else if (level == 1) {
+			pickedLevel = new GameLevel1(Main.getWidthAndHeight()[0], Main.getWidthAndHeight()[1]);
+		}
+		
+		return pickedLevel;
 	}
 
 }

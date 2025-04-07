@@ -21,13 +21,12 @@ public class PickMapScene extends BorderPane {
 		
 		HBox maps = mapSelectorBox();
 		
-		MyCanvasButton backButton = new MyCanvasButton(250, 125, "sprites/buttons/backButton.png");
+		MyCanvasButton backButton = new MyCanvasButton(250, 125, "sprites/buttons/backButton.png", 5);
 		backButton.setOnMouseClicked(event -> {
 			if (event.isStillSincePress()) {
 				Scene newScene = new Scene(new MainMenuScene(width, height, primaryStage));
 				primaryStage.setScene(newScene);
 			}
-
 		});
 		
 		this.primaryStage = primaryStage;
@@ -60,49 +59,49 @@ public class PickMapScene extends BorderPane {
 	private HBox mapSelectorBox() {
 		HBox returnBox = new HBox(scale * 50); 
 		
-		MyCanvasButton map1 = new MyCanvasButton(200, 200, "sprites/buttons/temp.png");
+		MyCanvasButton map1 = new MyCanvasButton(200, 200, "sprites/buttons/temp.png", 5);
 		map1.setOnMouseClicked(event -> {
 			if (event.isStillSincePress()) {
 				System.out.println("not active1");
 			}
 		});
 		
-		MyCanvasButton map2 = new MyCanvasButton(200, 200, "sprites/buttons/temp.png");
+		MyCanvasButton map2 = new MyCanvasButton(200, 200, "sprites/buttons/temp.png", 5);
 		map2.setOnMouseClicked(event -> {
 			if (event.isStillSincePress()) {
 				System.out.println("not active2");
 			}
 		});
 		
-		MyCanvasButton map3 = new MyCanvasButton(200, 200, "sprites/buttons/temp.png");
+		MyCanvasButton map3 = new MyCanvasButton(200, 200, "sprites/buttons/temp.png", 5);
 		map3.setOnMouseClicked(event -> {
 			if (event.isStillSincePress()) {
 				System.out.println("not active3");
 			}
 		});
 		
-		MyCanvasButton map4 = new MyCanvasButton(200, 200, "sprites/buttons/temp.png");
+		MyCanvasButton map4 = new MyCanvasButton(200, 200, "sprites/buttons/temp.png", 5);
 		map4.setOnMouseClicked(event -> {
 			if (event.isStillSincePress()) {
 				System.out.println("not active4");
 			}
 		});
 		
-		MyCanvasButton map5 = new MyCanvasButton(200, 200, "sprites/buttons/temp.png");
+		MyCanvasButton map5 = new MyCanvasButton(200, 200, "sprites/buttons/temp.png", 5);
 		map5.setOnMouseClicked(event -> {
 			if (event.isStillSincePress()) {
 				System.out.println("not active5");
 			}
 		});
 		
-		MyCanvasButton map6 = new MyCanvasButton(200, 200, "sprites/buttons/temp.png");
+		MyCanvasButton map6 = new MyCanvasButton(200, 200, "sprites/buttons/temp.png", 5);
 		map6.setOnMouseClicked(event -> {
 			if (event.isStillSincePress()) {
 				System.out.println("not active6");
 			}
 		});
 		
-		MyCanvasButton map7 = new MyCanvasButton(200, 200, "sprites/buttons/temp.png");
+		MyCanvasButton map7 = new MyCanvasButton(200, 200, "sprites/buttons/temp.png", 5);
 		map7.setOnMouseClicked(event -> {
 			if (event.isStillSincePress()) {
 				System.out.println("not active7");

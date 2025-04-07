@@ -278,4 +278,9 @@ public class Player extends GameEntity {
 		jumpAnimation.add("/sprites/ninjasprites/Jump__009.png");
 		return jumpAnimation;
 	}
+	
+	public void setPlayerSpawn(double spawnX, double spawnY) {
+		setXPos(spawnX);
+		setYPos(spawnY);
+	}
 }

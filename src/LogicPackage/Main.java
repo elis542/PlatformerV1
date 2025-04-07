@@ -14,7 +14,7 @@ public class Main extends Application {
 	private static double screenMultiplier = 100;
 	private static double width = (16 * screenMultiplier);
 	private static double height = (9 * screenMultiplier);
-	private static double scaleAmount = 1;
+	private static double scaleAmount = 0.75;
 
 	@Override
 	public void start(Stage arg0) throws Exception {

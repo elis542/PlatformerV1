@@ -25,13 +25,13 @@ public class MainMenuScene extends BorderPane {
 
 	public VBox leftSideButtons() {
 		VBox returnBox = new VBox(scale * 30);
-		MyCanvasButton startGameButton = new MyCanvasButton(200, 200, "sprites/buttons/startGameButton.png");
+		MyCanvasButton startGameButton = new MyCanvasButton(200, 200, "sprites/buttons/startGameButton.png", 5);
 		startGameButton.setOnMouseClicked(event -> {
-			Scene newScene = new Scene(new SceneCreatorGameLevel());
+			Scene newScene = new Scene(new SceneCreatorGameLevel(1, primaryStage));
 			primaryStage.setScene(newScene);
 		});
 		
-		MyCanvasButton chooseMapButton = new MyCanvasButton(200, 200, "sprites/buttons/chooseMapButton.png");
+		MyCanvasButton chooseMapButton = new MyCanvasButton(200, 200, "sprites/buttons/chooseMapButton.png", 5);
 		chooseMapButton.setOnMouseClicked(event -> {
 			Scene newScene = new Scene(new PickMapScene(getWidth(), getHeight(), primaryStage));
 			primaryStage.setScene(newScene);
