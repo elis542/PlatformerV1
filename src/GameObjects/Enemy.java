@@ -12,7 +12,7 @@ public abstract class Enemy extends GameEntity {
 
 	public Enemy(double xPos, double yPos, GameLevel level, double width, double height, String sprite) {
 		super(xPos, yPos, level, width, height, sprite);
-		setVelocity(Main.getWidthAndHeight()[1] / 5000);
+		setVelocity(3);
 		isEnemy();
 	}
 

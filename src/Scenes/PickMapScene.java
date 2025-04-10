@@ -3,6 +3,7 @@ package Scenes;
 import LogicPackage.Main;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -19,17 +20,11 @@ public class PickMapScene extends BorderPane {
 		
 		setPadding(new Insets(scale * 300, scale * 20, scale * 35, scale * 20)); // Top, Right, Bottom, Left
 		
+		this.primaryStage = primaryStage;
+		
 		HBox maps = mapSelectorBox();
 		
-		MyCanvasButton backButton = new MyCanvasButton(250, 125, "sprites/buttons/backButton.png", 5);
-		backButton.setOnMouseClicked(event -> {
-			if (event.isStillSincePress()) {
-				Scene newScene = new Scene(new MainMenuScene(width, height, primaryStage));
-				primaryStage.setScene(newScene);
-			}
-		});
-		
-		this.primaryStage = primaryStage;
+		MyCanvasButton backButton = backButtonCreation();
 		
 		this.setMouseTransparent(false);
 		
@@ -38,7 +33,7 @@ public class PickMapScene extends BorderPane {
 			event.consume();
 		});
 		
-		this.setOnMouseDragged(event -> {
+		setOnMouseDragged(event -> {
 			amountMoved += event.getX() - dragStarted;
 			
 			if (amountMoved > scale * 20) {
@@ -50,6 +45,16 @@ public class PickMapScene extends BorderPane {
 			maps.setTranslateX(amountMoved);
 			event.consume();
 			
+		});
+		
+		this.setOnScroll(event -> {
+			    amountMoved += event.getDeltaY();
+				
+				if (amountMoved > scale * 20) {
+					amountMoved = scale * 20;
+				}
+				
+				maps.setTranslateX(amountMoved);
 		});
 		
 		setLeft(maps);
@@ -121,5 +126,17 @@ public class PickMapScene extends BorderPane {
 		return returnBox;
 	}
 	
+	private MyCanvasButton backButtonCreation() { 
+		MyCanvasButton returnButton = new MyCanvasButton(250, 125, "sprites/buttons/backButton.png", 5);
+		returnButton.setOnMouseClicked(event -> {
+			if (event.isStillSincePress()) {
+				Scene newScene = new Scene(new MainMenuScene(getWidth(), getHeight(), primaryStage));
+				primaryStage.setScene(newScene);
+			}
+		});
+		
+		return returnButton;
+	}
+
 
 }

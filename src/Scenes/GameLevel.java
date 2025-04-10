@@ -15,9 +15,11 @@ public class GameLevel extends Canvas {
 	private List<GameEntity> entityList = new ArrayList<>();
 	private Player player;
 	private GameControllModel model;
-	private double scale = Main.getScale();
+	private double scale;
 
 	public GameLevel(double width, double height) {
+		scale = Main.getScale();
+		
 		setScaleX(scale);
 		setScaleY(scale);
 		

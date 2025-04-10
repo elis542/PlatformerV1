@@ -41,8 +41,8 @@ public class MainMenuScene extends BorderPane {
 		
 		box.setAlignment(Pos.CENTER);
 		
-		MyCanvasButton chosenMap = new MyCanvasButton(400 * scale, 400 * scale, "sprites/buttons/startGameButton.png");
-		MyCanvasButton chosenWeapon = new MyCanvasButton(400 * scale, 400 * scale, "sprites/buttons/startGameButton.png");
+		MyCanvasButton chosenMap = new MyCanvasButton(600, 600, "sprites/buttons/startGameButton.png");
+		MyCanvasButton chosenWeapon = new MyCanvasButton(600, 600, "sprites/buttons/startGameButton.png");
 		
 		box.getChildren().add(chosenMap);
 		box.getChildren().add(chosenWeapon);
@@ -57,12 +57,13 @@ public class MainMenuScene extends BorderPane {
 		
 		MyCanvasButton exitButton = new MyCanvasButton(150, 75, "sprites/buttons/exitButton.png", 5);
 		exitButton.setOnMouseClicked(event -> {
-			System.out.println("Currently inactive!");
+			javafx.application.Platform.exit();
 		});
 		
 		MyCanvasButton settingsButton = new MyCanvasButton(150, 75, "sprites/buttons/settingsButton.png", 5);
-		exitButton.setOnMouseClicked(event -> {
-			System.out.println("Currently inactive!");
+		settingsButton.setOnMouseClicked(event -> {
+			Scene newScene = new Scene(new settingsScene(getWidth(), getHeight(), primaryStage));
+			primaryStage.setScene(newScene);
 		});
 		
 		returnBox.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);

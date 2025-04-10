@@ -55,10 +55,10 @@ public class SceneCreatorGameLevel extends StackPane {
 	public GameLevel chosenLevel(int level) {
 		GameLevel pickedLevel = null;
 		if (level == 0) {
-			pickedLevel = new GameLevel1(Main.getWidthAndHeight()[0], Main.getWidthAndHeight()[1]);
+			pickedLevel = new GameLevel1(1600, 900);
 			
 		} else if (level == 1) {
-			pickedLevel = new GameLevel1(Main.getWidthAndHeight()[0], Main.getWidthAndHeight()[1]);
+			pickedLevel = new GameLevel1(1600, 900);
 		}
 		
 		return pickedLevel;
