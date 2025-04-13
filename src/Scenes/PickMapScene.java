@@ -1,9 +1,9 @@
 package Scenes;
 
 import LogicPackage.Main;
+import LogicPackage.Settings;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -26,9 +26,9 @@ public class PickMapScene extends BorderPane {
 		
 		MyCanvasButton backButton = backButtonCreation();
 		
-		this.setMouseTransparent(false);
+		setMouseTransparent(false);
 		
-		this.setOnMousePressed(event -> {
+		setOnMousePressed(event -> {
 			dragStarted = event.getX();
 			event.consume();
 		});
@@ -47,7 +47,7 @@ public class PickMapScene extends BorderPane {
 			
 		});
 		
-		this.setOnScroll(event -> {
+		setOnScroll(event -> {
 			    amountMoved += event.getDeltaY();
 				
 				if (amountMoved > scale * 20) {
@@ -64,17 +64,19 @@ public class PickMapScene extends BorderPane {
 	private HBox mapSelectorBox() {
 		HBox returnBox = new HBox(scale * 50); 
 		
-		MyCanvasButton map1 = new MyCanvasButton(200, 200, "sprites/buttons/temp.png", 5);
+		MyCanvasButton map1 = new MyCanvasButton(200, 200, Settings.getSelectedMapSpriteNumer(1), 5);
 		map1.setOnMouseClicked(event -> {
 			if (event.isStillSincePress()) {
-				System.out.println("not active1");
+				Settings.setSelectedMap(1);
+				goToMainMenu();
 			}
 		});
 		
-		MyCanvasButton map2 = new MyCanvasButton(200, 200, "sprites/buttons/temp.png", 5);
+		MyCanvasButton map2 = new MyCanvasButton(200, 200, Settings.getSelectedMapSpriteNumer(2), 5);
 		map2.setOnMouseClicked(event -> {
 			if (event.isStillSincePress()) {
-				System.out.println("not active2");
+				Settings.setSelectedMap(2);
+				goToMainMenu();
 			}
 		});
 		
@@ -126,12 +128,16 @@ public class PickMapScene extends BorderPane {
 		return returnBox;
 	}
 	
+	private void goToMainMenu() {
+		Scene newScene = new Scene(new MainMenuScene(getWidth(), getHeight(), primaryStage));
+		primaryStage.setScene(newScene);
+	}
+	
 	private MyCanvasButton backButtonCreation() { 
 		MyCanvasButton returnButton = new MyCanvasButton(250, 125, "sprites/buttons/backButton.png", 5);
 		returnButton.setOnMouseClicked(event -> {
 			if (event.isStillSincePress()) {
-				Scene newScene = new Scene(new MainMenuScene(getWidth(), getHeight(), primaryStage));
-				primaryStage.setScene(newScene);
+				goToMainMenu();
 			}
 		});
 		

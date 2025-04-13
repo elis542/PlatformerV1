@@ -1,7 +1,5 @@
 package Scenes;
 
-
-import LogicPackage.Settings;
 import javafx.scene.layout.VBox;
 
 

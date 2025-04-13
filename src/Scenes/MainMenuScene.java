@@ -1,6 +1,7 @@
 package Scenes;
 
 import LogicPackage.Main;
+import LogicPackage.Settings;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
@@ -41,8 +42,8 @@ public class MainMenuScene extends BorderPane {
 		
 		box.setAlignment(Pos.CENTER);
 		
-		MyCanvasButton chosenMap = new MyCanvasButton(600, 600, "sprites/buttons/startGameButton.png");
-		MyCanvasButton chosenWeapon = new MyCanvasButton(600, 600, "sprites/buttons/startGameButton.png");
+		MyCanvasButton chosenMap = new MyCanvasButton(600, 600, Settings.getSelectedMapSprite());
+		MyCanvasButton chosenWeapon = new MyCanvasButton(600, 600, "sprites/buttons/temp.png");
 		
 		box.getChildren().add(chosenMap);
 		box.getChildren().add(chosenWeapon);

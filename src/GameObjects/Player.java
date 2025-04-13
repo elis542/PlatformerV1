@@ -277,4 +277,8 @@ public class Player extends GameEntity {
 		setXPos(spawnX);
 		setYPos(spawnY);
 	}
+	
+	public void addItemToInventory(Cover item) { //Not finished
+		
+	}
 }
